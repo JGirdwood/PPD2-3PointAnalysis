@@ -11,8 +11,8 @@ if nargin<2
 end
 
 % Convert to cartesian from polar coordinates
-E1_xy = [rad*sind(angle_offset), rad*cosd(angle_offset)];
-E2_xy = [rad*sind(angle_offset+120), rad*cosd(angle_offset+120)];
-E3_xy = [rad*sind(angle_offset+120*2), rad*cosd(angle_offset+120*2)];
+E1_xy = round([rad*sind(angle_offset), rad*cosd(angle_offset)]);
+E2_xy = round([rad*sind(angle_offset+120), rad*cosd(angle_offset+120)]);
+E3_xy = round([rad*sind(angle_offset+120*2), rad*cosd(angle_offset+120*2)]);
 
 end
