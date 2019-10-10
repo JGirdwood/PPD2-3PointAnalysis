@@ -1,4 +1,4 @@
-function [ jpeg_cell ] = importer( data_dir )
+function [ jpeg_cell ] = Importer( data_dir )
 %IMPORTER imports jpegs in a folder to a cell for analysis
 %   Each cell element of 'jpeg_cell' is intensity in arbitrary units, the
 %   index is pixel number (X,Y). 'data_dir' is the directory containing the
@@ -19,4 +19,3 @@ end
 jpeg_cell = jpegs;                  % Assign output from function
 
 end
-

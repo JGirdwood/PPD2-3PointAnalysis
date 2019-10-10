@@ -1,0 +1,23 @@
+function [ AF ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
+%ASYMETRYFACTOR Computes an asymetry factor for the intensity across 3
+%square regions at given coordinates and a size.
+%   E*_xy is an array of [x, y] coordinates of the centroid of the square
+%   query points. Size is the size of these squares (one side of a square)
+%   in pixels. Image is an array of intensity in the PPD2 scattering image.
+
+hs = size/2;
+
+E1_array = image((E1_xy(2)-hs):(E1_xy(2)+hs),(E1_xy(1)-hs):(E1_xy(1)+hs));
+E2_array = image((E2_xy(2)-hs):(E2_xy(2)+hs),(E2_xy(1)-hs):(E2_xy(1)+hs));
+E3_array = image((E3_xy(2)-hs):(E3_xy(2)+hs),(E3_xy(1)-hs):(E3_xy(1)+hs));
+
+E1 = sum(E1_array);
+E2 = sum(E2_array);
+E3 = sum(E3_array);
+
+Ebar = (E1+ E2+E3)/3;
+
+AF = (sqrt(()^2+()^2+()^)/3)*40.8;
+
+end
+
