@@ -3,13 +3,16 @@ function [ E1_xy, E2_xy, E3_xy ] = r2xy( rad, angle_offset )
 %coordinates
 %   E*_xy is the outlut coordinates of the photodoides in pixels, r is the
 %   radius in pixels, and angle offset is the offset in the angle of the
-%   first doide (given equal spacing).
+%   first doide (given equal spacing) in degrees.
 
+% Set offset to 0 if not set
 if nargin<2
   angle_offset = 0;
 end
 
-
+% Convert to cartesian from polar coordinates
+E1_xy = [rad*sind(angle_offset), rad*cosd(angle_offset)];
+E2_xy = [rad*sind(angle_offset+120), rad*cosd(angle_offset+120)];
+E3_xy = [rad*sind(angle_offset+120*2), rad*cosd(angle_offset+120*2)];
 
 end
-

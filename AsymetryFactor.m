@@ -6,7 +6,12 @@ function [ AF ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
 %   in pixels. Image is an array of intensity in the PPD2 scattering image.
 %   The equation for AF is given in Kaye et al 1996.
 
-hs = size/2;            % Get half size for convinience
+hs = round(size/2);            % Get half size for convinience
+
+% Round to nearest integer pixel
+E1_xy = round(E1_xy);
+E2_xy = round(E2_xy);
+E3_xy = round(E3_xy);
 
 % Select the queried parts of the image covered by the "photodiodes"
 E1_array = image((E1_xy(2)-hs):(E1_xy(2)+hs),(E1_xy(1)-hs):(E1_xy(1)+hs));
