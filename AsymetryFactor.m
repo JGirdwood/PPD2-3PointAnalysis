@@ -18,9 +18,9 @@ E1_array = image((E1_xy(2)-hs):(E1_xy(2)+hs),(E1_xy(1)-hs):(E1_xy(1)+hs));
 E2_array = image((E2_xy(2)-hs):(E2_xy(2)+hs),(E2_xy(1)-hs):(E2_xy(1)+hs));
 E3_array = image((E3_xy(2)-hs):(E3_xy(2)+hs),(E3_xy(1)-hs):(E3_xy(1)+hs));
 
-E1 = sum(E1_array);     % Sum array to get E1
-E2 = sum(E2_array);     % Sum array to get E2
-E3 = sum(E3_array);     % Sum array to get E3
+E1 = sum(sum(E1_array));     % Sum array to get E1
+E2 = sum(sum(E2_array));     % Sum array to get E2
+E3 = sum(sum(E3_array));     % Sum array to get E3
 
 Ebar = (E1+ E2+E3)/3;   % Find the average for the AF computation
 
