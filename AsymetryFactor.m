@@ -25,7 +25,7 @@ E3 = sum(sum(E3_array));     % Sum array to get E3
 Ebar = (E1+ E2+E3)/3;   % Find the average for the AF computation
 
 % Compute AF from the equation in Kaye et al 1996 (centroid of a triangle)
-AF = (sqrt((Ebar-E1)^2+(Ebar-E2)^2+(Ebar-E3)^2)/3)*40.8;
+AF = (sqrt((Ebar-E1)^2+(Ebar-E2)^2+(Ebar-E3)^2)/3)/272;
 
 end
 
