@@ -10,7 +10,7 @@ offset_xy = [round(px/2), round(py/2)];
 PMT_size = 20;
 
 rad_ulim = round((py-25)/2);
-rad_step = 20;
+rad_step = 50;
 rad_llim = 50;
 
 AF_store = zeros(r, ceil((rad_ulim - rad_llim)/rad_step));
