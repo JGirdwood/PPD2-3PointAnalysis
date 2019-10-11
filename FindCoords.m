@@ -7,15 +7,16 @@ offset_xy = [round(px/2), round(py/2)];
 [r, ~] = size(jpeg_cell_au);
 PMT_size = 20;
 
-rad_ulim = (py-16)/2;
+rad_ulim = round((py-25)/2);
 rad_llim = 50;
 
 AF_store = zeros(r, rad_ulim - rad_llim);
-
-for j=rad_llim:rad_ulim
+AF_index = 1;
+for j=1:rad_llim-rad_ulim
     [ E1_xy, E2_xy, E3_xy ] = r2xy( j, offset_xy );
     for i=1:r
-        AF_store(i,j) = AsymetryFactor ...
+        AF_store(i, AF_index) = AsymetryFactor ...
             ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell_au{i} );
     end
+    AF_index = AF_index + 1;
 end
