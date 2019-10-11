@@ -4,7 +4,16 @@ function [ scatter_fig ] = TriangleScatter( AR123_array )
 %   same catagory (e.g. droplets).
 
 [r, c] = size(AR123_array);
-fig = figure();
+fig = figure;
+pax = polaraxes(fig);
+for i=1:c
+    for j=1:r
+        polarscatter(pax, AR123_array{j, i}(1), AR123_array{j, i}(2));
+        hold on
+    end
+end
+
+scatter_fig = fig;
 
 end
 
