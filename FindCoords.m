@@ -10,14 +10,15 @@ offset_xy = [round(px/2), round(py/2)];
 PMT_size = 20;
 
 rad_ulim = round((py-25)/2);
+rad_step = 20;
 rad_llim = 50;
 
-AF_store = zeros(r, rad_ulim - rad_llim);
-AR123_store = cell(r, rad_ulim - rad_llim);
+AF_store = zeros(r, ceil((rad_ulim - rad_llim)/rad_step));
+AR123_store = cell(r, ceil((rad_ulim - rad_llim)/rad_step));
 
 AF_index = 1;
 
-for j=1:rad_ulim-rad_llim
+for j=1:rad_step:rad_ulim-rad_llim
     
     [ E1_xy, E2_xy, E3_xy ] = r2xy( j, offset_xy );
     
