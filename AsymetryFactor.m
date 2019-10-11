@@ -18,13 +18,13 @@ E1_array = image((E1_xy(2)-hs):(E1_xy(2)+hs),(E1_xy(1)-hs):(E1_xy(1)+hs));
 E2_array = image((E2_xy(2)-hs):(E2_xy(2)+hs),(E2_xy(1)-hs):(E2_xy(1)+hs));
 E3_array = image((E3_xy(2)-hs):(E3_xy(2)+hs),(E3_xy(1)-hs):(E3_xy(1)+hs));
 
-E1 = sum(sum(E1_array));     % Sum array to get E1
-E2 = sum(sum(E2_array));     % Sum array to get E2
-E3 = sum(sum(E3_array));     % Sum array to get E3
+E1 = sum(sum(E1_array));        % Sum array to get E1
+E2 = sum(sum(E2_array));        % Sum array to get E2
+E3 = sum(sum(E3_array));        % Sum array to get E3
 
-E123 = [E1, E2, E3];         % Return all the intensities for plotting
+E123 = [E1, E2, E3];            % Return all the intensities for plotting
 
-Ebar = (E1+ E2+E3)/3;   % Find the average for the AF computation
+Ebar = (E1+ E2+E3)/3;           % Find the average for the AF computation
 
 % Compute AF from the equation in Kaye et al 1996 (centroid of a triangle)
 AF = (sqrt((Ebar-E1)^2+(Ebar-E2)^2+(Ebar-E3)^2)/3)/272;
