@@ -1,4 +1,4 @@
-function [ AF ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
+function [ AF, E123 ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
 %ASYMETRYFACTOR Computes an asymetry factor for the intensity across 3
 %square regions at given coordinates and a size.
 %   E*_xy is an array of [x, y] coordinates of the centroid of the square
@@ -21,6 +21,8 @@ E3_array = image((E3_xy(2)-hs):(E3_xy(2)+hs),(E3_xy(1)-hs):(E3_xy(1)+hs));
 E1 = sum(sum(E1_array));     % Sum array to get E1
 E2 = sum(sum(E2_array));     % Sum array to get E2
 E3 = sum(sum(E3_array));     % Sum array to get E3
+
+E123 = [E1, E2, E3];         % Return all the intensities for plotting
 
 Ebar = (E1+ E2+E3)/3;   % Find the average for the AF computation
 
