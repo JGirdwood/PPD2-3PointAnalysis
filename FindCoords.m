@@ -11,7 +11,7 @@ rad_ulim = round((py-25)/2);
 rad_llim = 50;
 
 AF_store = zeros(r, rad_ulim - rad_llim);
-AR123_store = zeros(r, rad_ulim - rad_llim);
+AR123_store = cell(r, rad_ulim - rad_llim);
 
 AF_index = 1;
 for j=1:rad_ulim-rad_llim
@@ -22,7 +22,8 @@ for j=1:rad_ulim-rad_llim
         
         [AF_store(i, AF_index), E123] = AsymetryFactor ...
             ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell_au{i} );
-        AR123_store(i, AF_index) = E123toPolar( E123 );
+         [ A123, R123 ] = E123toPolar( E123 );
+         AR123_store{i, AF_index} = [ A123, R123 ];
         
     end
     
