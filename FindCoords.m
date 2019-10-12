@@ -11,6 +11,7 @@
 % All the variables to alter the behaviour of the script are specified here
 % for usability.
 close, clear, clc
+error = false;
 
 rad_loop = 0;               % Loop through radii or images
 image_loop = 1 - rad_loop;
@@ -24,6 +25,7 @@ particle_types = 2;         % Number of different particle types
 PMT_size = 20;              % Detector size in pixels
 image_radius = 279;         % Radius of image in pixels
 beamstop_radius = 50;       % Radius of centre beamstop in pixels
+default_radius = 100;       % Radius for the image loop
 
 % ******Specify cm to pixel conversions here when known********
 
@@ -40,6 +42,13 @@ jpeg_cell_solid = Importer(solid_path);     % Import solid images
 offset_xy = [round(dx/2), round(dy/2)];     % Get image centre pixels
 [rd, ~] = size(jpeg_cell_droplet);          % Get amount of droplets
 [rs, ~] = size(jpeg_cell_solid);            % Get amount of solids
+
+% Ensure number of images is equal for fair comparison
+if rd ~= rs
+    rad_loop = -1;
+    image_loop = -1;
+    error = true;
+end
 
 %%  Loops
 % 1) Image loop
@@ -87,8 +96,20 @@ if rad_loop == 1
 % 2) Image loop
 elseif image_loop == 1
     
+    fixed_rad = default_radius;
     num_types = particle_types;
+    [ E1_xy, E2_xy, E3_xy ] = r2xy( fixed_rad, offset_xy );
     
+    % Pre-allocate storage variables for asumetry factor (AF) and centroid
+    % angle radius for the 3 combined detectors (AR123)
+    AF_store = zeros();
+    AR123_store = cell();
+    
+    for j=1:num_types
+        
+        
+        
+    end
     
 end
 
