@@ -2,6 +2,10 @@ function [ A123, R123 ] = E123toPolar( E123 )
 %E123TOPOLAR Convert the 3 detector energies to a polar vetcor centroid.
 %   AR123 is the radius and angle of the point and E123 is the 3 detector
 %   energies in the following format [E1, E2, E3].
+%
+% Author:           Joseph Girdwood
+% Affiliation:      University of Hertfordshire
+% email:            j.girdwood@herts.ac.uk
 
 [X1, Y1] = pol2cart(0, E123(1));
 [X2, Y2] = pol2cart(120*pi/180, E123(2));

@@ -5,6 +5,10 @@ function [ E1_xy, E2_xy, E3_xy ] = r2xy( rad, offset_xy, angle_offset )
 %   radius in pixels, and angle offset is the offset in the angle of the
 %   first doide (given equal spacing) in degrees. offset_xy is the centre
 %   of the image from the lower left corner in [x, y] pixels.
+%
+% Author:           Joseph Girdwood
+% Affiliation:      University of Hertfordshire
+% email:            j.girdwood@herts.ac.uk
 
 % Set offset to 0 if not set
 if nargin<3

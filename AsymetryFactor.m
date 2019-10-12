@@ -5,6 +5,10 @@ function [ AF, E123 ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
 %   query points. Size is the size of these squares (one side of a square)
 %   in pixels. Image is an array of intensity in the PPD2 scattering image.
 %   The equation for AF is given in Kaye et al 1996.
+%
+% Author:           Joseph Girdwood
+% Affiliation:      University of Hertfordshire
+% email:            j.girdwood@herts.ac.uk
 
 hs = round(size/2);            % Get half size for convinience
 

@@ -3,6 +3,10 @@ function [ jpeg_cell ] = Importer( data_dir )
 %   Each cell element of 'jpeg_cell' is intensity in arbitrary units, the
 %   index is pixel number (X,Y). 'data_dir' is the directory containing the
 %   jpegs to be analysed.
+%
+% Author:           Joseph Girdwood
+% Affiliation:      University of Hertfordshire
+% email:            j.girdwood@herts.ac.uk
 
 %%  Find all the files with .jpg extension in the data directory
 search_string = char([data_dir, '\*jpg']);
