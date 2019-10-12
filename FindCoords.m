@@ -25,7 +25,7 @@ particle_types = 2;         % Number of different particle types
 PMT_size = 20;              % Detector size in pixels
 image_radius = 279;         % Radius of image in pixels
 beamstop_radius = 50;       % Radius of centre beamstop in pixels
-default_radius = 100;       % Radius for the image loop
+default_radius = 80;       % Radius for the image loop
 
 % ******Specify cm to pixel conversions here when known********
 
@@ -102,14 +102,25 @@ elseif image_loop == 1
     
     % Pre-allocate storage variables for asumetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
-    AF_store = zeros();
-    AR123_store = cell();
+    AF_store = zeros(rd, num_types);
+    AR123_store = cell(rd, num_types);
+    
+    jpeg_cell = {jpeg_cell_droplet, jpeg_cell_solid};
     
     for j=1:num_types
         
-        
+        for i=1:rd
+            
+            [AF_store(i, j), E123] = AsymetryFactor ...
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{j}{i} );
+            [ A123, R123 ] = E123toPolar( E123 );
+            AR123_store{i, j} = [ A123, R123 ];
+            
+        end
         
     end
+    
+    tri_fig = TriangleScatter(AR123_store, {'Droplets', 'Solids'});
     
 end
 
