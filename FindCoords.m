@@ -17,6 +17,13 @@ image_loop = 1 - rad_loop;
 
 compare_droplet_rad = 1;    % Compare radii of drops or solids
 compare_solid_rad = 1 - compare_droplet_rad;
+radius_step = 50;           % Step in radius for loopiness
+
+particle_types = 2;         % Number of different particle types
+
+PMT_size = 20;              % Detector size in pixels
+image_radius = 279;         % Radius of image in pixels
+beamstop_radius = 50;       % Radius of centre beamstop in pixels
 
 % ******Specify cm to pixel conversions here when known********
 
@@ -33,16 +40,15 @@ jpeg_cell_solid = Importer(solid_path);     % Import solid images
 offset_xy = [round(dx/2), round(dy/2)];     % Get image centre pixels
 [rd, ~] = size(jpeg_cell_droplet);          % Get amount of droplets
 [rs, ~] = size(jpeg_cell_solid);            % Get amount of solids
-PMT_size = 20;                              % Detector size in pixels
 
 %%  Loops
 % 1) Image loop
 if rad_loop == 1
     
     % Get radius upper and low limits (and specify step)
-    rad_ulim = round((dy-25)/2);
-    rad_step = 50;
-    rad_llim = 50;
+    rad_ulim = image_radius;
+    rad_step = radius_step;
+    rad_llim = beamstop_radius;
     
     % Pre-allocate storage variables for asumetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
@@ -81,7 +87,32 @@ if rad_loop == 1
 % 2) Image loop
 elseif image_loop == 1
     
+    num_types = particle_types;
     
     
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
