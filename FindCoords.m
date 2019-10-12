@@ -12,8 +12,11 @@
 % for usability.
 close, clear, clc
 
-rad_loop = 0;               % Loop through radii if 1
-image_loop = 1 - rad_loop;  % Automatically calculated (if not rad loop)
+rad_loop = 0;               % Loop through radii or images
+image_loop = 1 - rad_loop;
+
+compare_droplet_rad = 1;    % Compare radii of drops or solids
+compare_solid_rad = 1 - compare_droplet_rad;
 
 % ******Specify cm to pixel conversions here when known********
 
@@ -47,6 +50,12 @@ if rad_loop == 1
     AR123_store = cell(rd, ceil((rad_ulim - rad_llim)/rad_step));
 
     AF_index = 1;   % Index for storage variables in loop
+    
+    if compare_droplet_rad == 1
+        jpeg_cell = jpeg_cell_droplet;
+    elseif compare_solid_rad == 1
+        jpeg_cell = jpeg_cell_solid;
+    end
 
     for j=1:rad_step:rad_ulim-rad_llim      % Loop through radii
         
@@ -57,7 +66,7 @@ if rad_loop == 1
         for i=1:rd                          % Loop through images
 
             [AF_store(i, AF_index), E123] = AsymetryFactor ...
-                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell_droplet{i} );
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{i} );
             [ A123, R123 ] = E123toPolar( E123 );
             AR123_store{i, AF_index} = [ A123, R123 ];
 
