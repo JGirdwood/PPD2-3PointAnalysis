@@ -43,7 +43,8 @@ plot = false;
 
 % Variables for the classification of particles
 AF_droplet = 20;            % Below this AF, particle is droplet
-AF_solid = 30;              % Above this AF, particle is solid
+AF_solid = 20;              % Above this AF, particle is solid
+AF_scale = 1/1800;          % Scaling factor in AF calculation
 
 %%  Pre-Loop computation
 jpeg_cell_droplet = Importer(droplet_path); % Import droplet images
@@ -92,7 +93,7 @@ if rad_loop == 1
         for i=1:rd                          % Loop through images
 
             [AF_store(i, AF_index), E123] = AsymetryFactor ...
-                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{i}, 1/272 );
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{i}, AF_scale );
             [ A123, R123 ] = E123toPolar( E123 );
             AR123_store{i, AF_index} = [ A123, R123 ];
 
@@ -125,7 +126,7 @@ elseif image_loop == 1
         for i=1:rd
             
             [AF_store(i, j), E123] = AsymetryFactor ...
-                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{j}{i}, 1/272 );
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{j}{i}, AF_scale );
             [ A123, R123 ] = E123toPolar( E123 );
             AR123_store{i, j} = [ A123, R123 ];
             
@@ -137,11 +138,12 @@ elseif image_loop == 1
         tri_fig = TriangleScatter(AR123_store, {'Droplets', 'Solids'});
     end
     
-    for i=1:num_types
-        
-        
-        
-    end
+    class_store = cell(1, num_types);
+    class_store{1, 1} = AF_store(:, 1) > AF_droplet;
+    class_store{1, 2} = AF_store(:, 2) < AF_solid;
+    
+    percent_error_droplet = sum(class_store{1, 1})/rd*100
+    percent_error_solid = sum(class_store{1, 2})/rd*100
     
 end
 
