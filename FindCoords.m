@@ -10,22 +10,26 @@
 %%  User specified variables
 % All the variables to alter the behaviour of the script are specified here
 % for usability.
-close, clear, clc
-error = false;
+close, clear, clc           % blank slate
+error = false;              % Error indicator, set to false at beginning
 
+% Parameters for choosing loop
 rad_loop = 0;               % Loop through radii or images
 image_loop = 1 - rad_loop;
 
+% Parameters for choosing radii
 compare_droplet_rad = 1;    % Compare radii of drops or solids
 compare_solid_rad = 1 - compare_droplet_rad;
 radius_step = 50;           % Step in radius for loopiness
 
+% Parameters for the image loop
 particle_types = 2;         % Number of different particle types
 
-PMT_size = 20;              % Detector size in pixels
+% Parameters for the camera area
+PMT_size = 70;              % Detector size in pixels
 image_radius = 279;         % Radius of image in pixels
 beamstop_radius = 50;       % Radius of centre beamstop in pixels
-default_radius = 80;       % Radius for the image loop
+default_radius = 150;       % Radius for the image loop
 
 % ******Specify cm to pixel conversions here when known********
 
@@ -33,6 +37,9 @@ default_radius = 80;       % Radius for the image loop
 % solid defined). 
 droplet_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Droplets';
 solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Unclassified-Solid';
+
+% Set to true if plots are needed
+plot = false;
 
 %%  Pre-Loop computation
 jpeg_cell_droplet = Importer(droplet_path); % Import droplet images
@@ -91,7 +98,9 @@ if rad_loop == 1
 
     end
     
-    tri_fig = TriangleScatter(AR123_store, 1:rad_step:rad_ulim-rad_llim);
+    if plot == true
+        tri_fig = TriangleScatter(AR123_store, 1:rad_step:rad_ulim-rad_llim);
+    end
 
 % 2) Image loop
 elseif image_loop == 1
@@ -120,7 +129,9 @@ elseif image_loop == 1
         
     end
     
-    tri_fig = TriangleScatter(AR123_store, {'Droplets', 'Solids'});
+    if plot == true
+        tri_fig = TriangleScatter(AR123_store, {'Droplets', 'Solids'});
+    end
     
 end
 

@@ -34,7 +34,7 @@ for i=1:cl
     name_store{i} = char(leg_labels(i));
 end
 
-legend(pax, Pscat, name_store)
+legend(pax, name_store)
 
 scatter_fig = fig;
 
