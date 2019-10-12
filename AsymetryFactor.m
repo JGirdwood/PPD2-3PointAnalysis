@@ -1,4 +1,4 @@
-function [ AF, E123 ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image )
+function [ AF, E123 ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, size, image, scale )
 %ASYMETRYFACTOR Computes an asymetry factor for the intensity across 3
 %square regions at given coordinates and a size.
 %   E*_xy is an array of [x, y] coordinates of the centroid of the square
@@ -31,7 +31,7 @@ E123 = [E1, E2, E3];            % Return all the intensities for plotting
 Ebar = (E1+ E2+E3)/3;           % Find the average for the AF computation
 
 % Compute AF from the equation in Kaye et al 1996 (centroid of a triangle)
-AF = (sqrt((Ebar-E1)^2+(Ebar-E2)^2+(Ebar-E3)^2)/3)/272;
+AF = (sqrt((Ebar-E1)^2+(Ebar-E2)^2+(Ebar-E3)^2)/3)*scale;
 
 end
 

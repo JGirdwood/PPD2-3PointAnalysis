@@ -31,7 +31,7 @@ image_radius = 279;         % Radius of image in pixels
 beamstop_radius = 50;       % Radius of centre beamstop in pixels
 default_radius = 150;       % Radius for the image loop
 
-% ******Specify cm to pixel conversions here when known********
+% ********Specify cm to pixel conversions here when known********
 
 % Specify the file paths for various different aerosol types (droplet and
 % solid defined). 
@@ -40,6 +40,10 @@ solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sort
 
 % Set to true if plots are needed
 plot = false;
+
+% Variables for the classification of particles
+AF_droplet = 20;            % Below this AF, particle is droplet
+AF_solid = 30;              % Above this AF, particle is solid
 
 %%  Pre-Loop computation
 jpeg_cell_droplet = Importer(droplet_path); % Import droplet images
@@ -88,7 +92,7 @@ if rad_loop == 1
         for i=1:rd                          % Loop through images
 
             [AF_store(i, AF_index), E123] = AsymetryFactor ...
-                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{i} );
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{i}, 1/272 );
             [ A123, R123 ] = E123toPolar( E123 );
             AR123_store{i, AF_index} = [ A123, R123 ];
 
@@ -121,7 +125,7 @@ elseif image_loop == 1
         for i=1:rd
             
             [AF_store(i, j), E123] = AsymetryFactor ...
-                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{j}{i} );
+                ( E1_xy, E2_xy, E3_xy, PMT_size, jpeg_cell{j}{i}, 1/272 );
             [ A123, R123 ] = E123toPolar( E123 );
             AR123_store{i, j} = [ A123, R123 ];
             
@@ -131,6 +135,12 @@ elseif image_loop == 1
     
     if plot == true
         tri_fig = TriangleScatter(AR123_store, {'Droplets', 'Solids'});
+    end
+    
+    for i=1:num_types
+        
+        
+        
     end
     
 end
