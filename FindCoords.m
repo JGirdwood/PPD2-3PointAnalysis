@@ -1,9 +1,8 @@
-%close, clear, clc
+close, clear, clc
 
 rad_loop = 0;
 image_loop = 1 - rad_loop;
 
-%jpeg_cell_au = Importer('C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2\SID3-PPD2\NetworkTest\[150091716]');
 jpeg_cell_droplet = Importer('C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Droplets');
 jpeg_cell_solid = Importer('C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Unclassified-Solid');
 
@@ -47,5 +46,4 @@ elseif image_loop == 1
     
     
 end
-
 
