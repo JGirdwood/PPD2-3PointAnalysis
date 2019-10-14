@@ -172,6 +172,11 @@ elseif loop == 2
     
     class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
         floor((size_ulim - size_llim)/size_step), num_types);
+    
+    clerr_droplet = zeros(floor((rad_ulim - rad_llim)/rad_step), ...
+        floor((size_ulim - size_llim)/size_step));
+    clerr_solid = zeros(floor((rad_ulim - rad_llim)/rad_step), ...
+        floor((size_ulim - size_llim)/size_step));
 
     AF_index_rad = 1;       % Index for storage variables in loop
     
@@ -202,6 +207,9 @@ elseif loop == 2
                 (:, AF_index_rad, AF_index_size, 1) > AF_droplet;
             class_store{AF_index_rad, AF_index_size, 2} = AF_store ...
                 (:, AF_index_rad, AF_index_size, 2) < AF_solid;
+            
+            clerr_droplet(AF_index_rad, AF_index_size) = sum(class_store{AF_index_rad, AF_index_size, 1})/rd*100;
+            clerr_solid(AF_index_rad, AF_index_size) = sum(class_store{AF_index_rad, AF_index_size, 2})/rd*100;
             
             AF_index_size = AF_index_size + 1;
             
