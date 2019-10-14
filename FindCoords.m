@@ -13,9 +13,8 @@
 close, clear, clc           % blank slate
 error = false;              % Error indicator, set to false at beginning
 
-% Parameters for choosing loop
-rad_loop = 0;               % Loop through radii or images
-image_loop = 1 - rad_loop;
+% Parameter for choosing loop: 0 if radius, 1 if image, 2 if class error
+loop = 2;
 
 % Parameters for choosing radii
 compare_droplet_rad = 1;    % Compare radii of drops or solids
@@ -57,14 +56,13 @@ offset_xy = [round(dx/2), round(dy/2)];     % Get image centre pixels
 
 % Ensure number of images is equal for fair comparison
 if rd ~= rs
-    rad_loop = -1;
-    image_loop = -1;
+    loop = -1;
     error = true;
 end
 
 %%  Loops
 % 1) Image loop
-if rad_loop == 1
+if loop == 0
     
     % Get radius upper and low limits (and specify step)
     rad_ulim = image_radius;
@@ -108,7 +106,7 @@ if rad_loop == 1
     end
 
 % 2) Image loop
-elseif image_loop == 1
+elseif loop == 1
     
     fixed_rad = default_radius;
     num_types = particle_types;
@@ -147,7 +145,9 @@ elseif image_loop == 1
     
 end
 
-
+if error == true
+    "Errors were encountered"
+end
 
 
 
