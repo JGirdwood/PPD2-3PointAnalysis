@@ -19,7 +19,7 @@ loop = 2;
 % Parameters for choosing radii
 compare_droplet_rad = 1;    % Compare radii of drops or solids
 compare_solid_rad = 1 - compare_droplet_rad;
-radius_step = 50;           % Step in radius for loopiness
+radius_step = 10;           % Step in radius for loopiness
 
 % Parameters for the image loop
 particle_types = 2;         % Number of different particle types
@@ -33,7 +33,7 @@ PMT_size_step = 10;         % Step in PMT size loop in pixels
 PMT_size = 70;              % Detector size in pixels (default)
 image_radius = 279;         % Radius of image in pixels
 beamstop_radius = 50;       % Radius of centre beamstop in pixels
-default_radius = 150;       % Radius for the image loop
+default_radius = 140;       % Radius for the image loop
 
 % ********Specify cm to pixel conversions here when known********
 
@@ -145,8 +145,8 @@ elseif loop == 1
     class_store{1, 1} = AF_store(:, 1) > AF_droplet;
     class_store{1, 2} = AF_store(:, 2) < AF_solid;
     
-    percent_error_droplet = sum(class_store{1, 1})/rd*100;
-    percent_error_solid = sum(class_store{1, 2})/rd*100;
+    percent_error_droplet = sum(class_store{1, 1})/rd*100
+    percent_error_solid = sum(class_store{1, 2})/rd*100
 
 % 3) Classification error loop and plotting
 elseif loop == 2
@@ -155,28 +155,25 @@ elseif loop == 2
     rad_ulim = image_radius;
     rad_step = radius_step;
     rad_llim = beamstop_radius;
+    [rad_amount, ~] = size(rad_llim:rad_step:rad_ulim-rad_llim);
     
     % Get PMT size upper and low limits (and specify step)
     size_ulim = PMT_size_max;
     size_llim = PMT_size_min;
     size_step = PMT_size_step;
+    [size_amount, ~] = size(size_llim:size_step:size_ulim-size_llim);
     
     num_types = particle_types;
     
     % Pre-allocate storage variables for asymetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
-    AF_store = zeros(rd, floor((rad_ulim - rad_llim)/rad_step), ...
-        floor((size_ulim - size_llim)/size_step), num_types);
-    AR123_store = cell(rd, floor((rad_ulim - rad_llim)/rad_step), ...
-        floor((size_ulim - size_llim)/size_step), num_types);
+    AF_store = zeros(rd, rad_amount, size_amount, num_types);
+    AR123_store = cell(rd, rad_amount, size_amount, num_types);
     
-    class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
-        floor((size_ulim - size_llim)/size_step), num_types);
+    class_store = cell(rad_amount, size_amount, num_types);
     
-    clerr_droplet = zeros(floor((rad_ulim - rad_llim)/rad_step), ...
-        floor((size_ulim - size_llim)/size_step));
-    clerr_solid = zeros(floor((rad_ulim - rad_llim)/rad_step), ...
-        floor((size_ulim - size_llim)/size_step));
+    clerr_droplet = zeros(rad_amount, size_amount);
+    clerr_solid = zeros(rad_amount, size_amount);
 
     AF_index_rad = 1;       % Index for storage variables in loop
     
@@ -194,7 +191,7 @@ elseif loop == 2
                 for j=1:rd
                     
                     [AF_store(j, AF_index_rad, AF_index_size, i), E123] = ...
-                        AsymetryFactor( E1_xy, E2_xy, E3_xy, AF_index_size, ...
+                        AsymetryFactor( E1_xy, E2_xy, E3_xy, k, ...
                         jpeg_cell{i}{j}, AF_scale );
                     [ A123, R123 ] = E123toPolar( E123 );
                     AR123_store{j, AF_index_rad, k, i} = [ A123, R123 ];
@@ -208,8 +205,10 @@ elseif loop == 2
             class_store{AF_index_rad, AF_index_size, 2} = AF_store ...
                 (:, AF_index_rad, AF_index_size, 2) < AF_solid;
             
-            clerr_droplet(AF_index_rad, AF_index_size) = sum(class_store{AF_index_rad, AF_index_size, 1})/rd*100;
-            clerr_solid(AF_index_rad, AF_index_size) = sum(class_store{AF_index_rad, AF_index_size, 2})/rd*100;
+            clerr_droplet(AF_index_rad, AF_index_size) = ...
+                sum(class_store{AF_index_rad, AF_index_size, 1})/rd*100;
+            clerr_solid(AF_index_rad, AF_index_size) = ...
+                sum(class_store{AF_index_rad, AF_index_size, 2})/rd*100;
             
             AF_index_size = AF_index_size + 1;
             
