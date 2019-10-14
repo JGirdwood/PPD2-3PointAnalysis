@@ -117,7 +117,7 @@ elseif loop == 1
     num_types = particle_types;
     [ E1_xy, E2_xy, E3_xy ] = r2xy( fixed_rad, offset_xy );
     
-    % Pre-allocate storage variables for asumetry factor (AF) and centroid
+    % Pre-allocate storage variables for asymetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
     AF_store = zeros(rd, num_types);
     AR123_store = cell(rd, num_types);
@@ -156,16 +156,47 @@ elseif loop == 2
     rad_step = radius_step;
     rad_llim = beamstop_radius;
     
-    % Pre-allocate storage variables for asumetry factor (AF) and centroid
+    % Get PMT size upper and low limits (and specify step)
+    size_ulim = PMT_size_max;
+    size_llim = PMT_size_min;
+    size_step = PMT_size_step;
+    
+    num_types = particle_types;
+    
+    % Pre-allocate storage variables for asymetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
-    AF_store = zeros(rd, ceil((rad_ulim - rad_llim)/rad_step));
-    AR123_store = cell(rd, ceil((rad_ulim - rad_llim)/rad_step));
+    AF_store = zeros(rd, ceil((rad_ulim - rad_llim)/rad_step), ...
+        ceil((size_ulim - size_llim)/size_step), num_types);
+    AR123_store = cell(rd, ceil((rad_ulim - rad_llim)/rad_step), ...
+        ceil((size_ulim - size_llim)/size_step), num_types);
 
     AF_index_rad = 1;       % Index for storage variables in loop
+    AF_index_size = 1;
     
-    for j=1:rad_step:rad_ulim-rad_llim
+    jpeg_cell = {jpeg_cell_droplet, jpeg_cell_solid};
+    
+    for l=1:rad_step:rad_ulim-rad_llim
         
-        % ~~~~~
+        [ E1_xy, E2_xy, E3_xy ] = r2xy( l, offset_xy );
+        
+        for k=1:size_step:size_ulim-size_llim
+            
+            for j=1:rd
+                
+                for i=1:num_types
+                    
+                    [AF_store(j, l, k, i), E123] = AsymetryFactor ...
+                        ( E1_xy, E2_xy, E3_xy, k, jpeg_cell{i}{j}, AF_scale );
+                    [ A123, R123 ] = E123toPolar( E123 );
+                    AR123_store{j, l, k, i} = [ A123, R123 ];
+                    
+                end
+                
+            end
+            
+            AF_index_size = AF_index_size + 1;
+            
+        end
         
         AF_index_rad = AF_index_rad + 1;
         
