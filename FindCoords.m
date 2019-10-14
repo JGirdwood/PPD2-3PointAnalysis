@@ -19,15 +19,15 @@ loop = 2;
 % Parameters for choosing radii
 compare_droplet_rad = 1;    % Compare radii of drops or solids
 compare_solid_rad = 1 - compare_droplet_rad;
-radius_step = 10;           % Step in radius for loopiness
+radius_step = 2;            % Step in radius for loopiness
 
 % Parameters for the image loop
 particle_types = 2;         % Number of different particle types
 
 % Parameters for the class error loop
 PMT_size_min = 10;          % Min PMT size in pixels
-PMT_size_max = 150;         % Max PMT size in pixels
-PMT_size_step = 10;         % Step in PMT size loop in pixels
+PMT_size_max = 135;         % Max PMT size in pixels
+PMT_size_step = 2;          % Step in PMT size loop in pixels
 
 % Parameters for the camera area
 PMT_size = 70;              % Detector size in pixels (default)
@@ -156,12 +156,14 @@ elseif loop == 2
     rad_step = radius_step;
     rad_llim = beamstop_radius;
     [rad_amount, ~] = size(rad_llim:rad_step:rad_ulim-rad_llim);
+    rad_arr = rad_llim:rad_step:rad_ulim-rad_llim;
     
     % Get PMT size upper and low limits (and specify step)
     size_ulim = PMT_size_max;
     size_llim = PMT_size_min;
     size_step = PMT_size_step;
     [size_amount, ~] = size(size_llim:size_step:size_ulim-size_llim);
+    size_arr = size_llim:size_step:size_ulim-size_llim;
     
     num_types = particle_types;
     
@@ -225,9 +227,9 @@ elseif loop == 2
     end
     
     if plot == true
-        %err_fig_d = PlotClassError(clerr_droplet);
-        %err_fig_s = PlotClassError(clerr_solid);
-        err_fig_m = PlotClassError(clerr_mean);
+        %err_fig_d = PlotClassError(clerr_droplet, rad_arr, size_arr);
+        %err_fig_s = PlotClassError(clerr_solid, rad_arr, size_arr);
+        err_fig_m = PlotClassError(clerr_mean, rad_arr, size_arr);
     end
     
 end
