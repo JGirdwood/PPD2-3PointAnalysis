@@ -166,9 +166,12 @@ elseif loop == 2
     % Pre-allocate storage variables for asymetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
     AF_store = zeros(rd, floor((rad_ulim - rad_llim)/rad_step), ...
-        ceil((size_ulim - size_llim)/size_step), num_types);
+        floor((size_ulim - size_llim)/size_step), num_types);
     AR123_store = cell(rd, floor((rad_ulim - rad_llim)/rad_step), ...
-        ceil((size_ulim - size_llim)/size_step), num_types);
+        floor((size_ulim - size_llim)/size_step), num_types);
+    
+    class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
+        floor((size_ulim - size_llim)/size_step), num_types);
 
     AF_index_rad = 1;       % Index for storage variables in loop
     
@@ -195,12 +198,9 @@ elseif loop == 2
                 
             end
             
-            class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
-                ceil((size_ulim - size_llim)/size_step), num_types);
-            
-            class_store{AF_index_rad, k, 1} = AF_store ...
+            class_store{AF_index_rad, AF_index_size, 1} = AF_store ...
                 (:, AF_index_rad, AF_index_size, 1) > AF_droplet;
-            class_store{AF_index_rad, k, 2} = AF_store ...
+            class_store{AF_index_rad, AF_index_size, 2} = AF_store ...
                 (:, AF_index_rad, AF_index_size, 2) < AF_solid;
             
             AF_index_size = AF_index_size + 1;
