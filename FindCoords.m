@@ -179,11 +179,11 @@ elseif loop == 2
         
         [ E1_xy, E2_xy, E3_xy ] = r2xy( l, offset_xy );
         
-        for k=1:size_step:size_ulim-size_llim
+        for k=1:size_step:size_ulim-size_llim 
             
-            for j=1:rd
+            for i=1:num_types
                 
-                for i=1:num_types
+                for j=1:rd
                     
                     [AF_store(j, l, k, i), E123] = AsymetryFactor ...
                         ( E1_xy, E2_xy, E3_xy, k, jpeg_cell{i}{j}, AF_scale );
@@ -193,6 +193,12 @@ elseif loop == 2
                 end
                 
             end
+            
+            class_store = cell(ceil((rad_ulim - rad_llim)/rad_step), ...
+                ceil((size_ulim - size_llim)/size_step), num_types);
+            
+            class_store{l, k, 1} = AF_store(:, 1) > AF_droplet;
+            class_store{l, k, 2} = AF_store(:, 2) < AF_solid;
             
             AF_index_size = AF_index_size + 1;
             
