@@ -171,7 +171,6 @@ elseif loop == 2
         ceil((size_ulim - size_llim)/size_step), num_types);
 
     AF_index_rad = 1;       % Index for storage variables in loop
-    AF_index_size = 1;
     
     jpeg_cell = {jpeg_cell_droplet, jpeg_cell_solid};
     
@@ -180,6 +179,8 @@ elseif loop == 2
         [ E1_xy, E2_xy, E3_xy ] = r2xy( l, offset_xy );
         
         for k=size_llim:size_step:size_ulim-size_llim 
+            
+            AF_index_size = 1;
             
             for i=1:num_types
                 
