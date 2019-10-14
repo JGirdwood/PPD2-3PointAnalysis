@@ -43,7 +43,7 @@ droplet_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-so
 solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Unclassified-Solid';
 
 % Set to true if plots are needed
-plot = false;
+plot = true;
 
 % Variables for the classification of particles
 AF_droplet = 20;            % Below this AF, particle is droplet
@@ -174,6 +174,7 @@ elseif loop == 2
     
     clerr_droplet = zeros(rad_amount, size_amount);
     clerr_solid = zeros(rad_amount, size_amount);
+    clerr_mean = zeros(rad_amount, size_amount);
 
     AF_index_rad = 1;       % Index for storage variables in loop
     
@@ -210,12 +211,23 @@ elseif loop == 2
             clerr_solid(AF_index_rad, AF_index_size) = ...
                 sum(class_store{AF_index_rad, AF_index_size, 2})/rd*100;
             
+            mean_err = (sum(class_store{AF_index_rad, AF_index_size, 1})/rd*100 ...
+                + sum(class_store{AF_index_rad, AF_index_size, 2})/rd*100) / 2;
+            
+            clerr_mean(AF_index_rad, AF_index_size) = mean_err;
+            
             AF_index_size = AF_index_size + 1;
             
         end
         
         AF_index_rad = AF_index_rad + 1;
         
+    end
+    
+    if plot == true
+        %err_fig_d = PlotClassError(clerr_droplet);
+        %err_fig_s = PlotClassError(clerr_solid);
+        err_fig_m = PlotClassError(clerr_mean);
     end
     
 end
