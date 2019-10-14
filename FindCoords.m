@@ -177,17 +177,17 @@ elseif loop == 2
     for l=rad_llim:rad_step:rad_ulim-rad_llim
         
         [ E1_xy, E2_xy, E3_xy ] = r2xy( l, offset_xy );
+        AF_index_size = 1;
         
         for k=size_llim:size_step:size_ulim-size_llim 
-            
-            AF_index_size = 1;
             
             for i=1:num_types
                 
                 for j=1:rd
                     
-                    [AF_store(j, AF_index_rad, AF_index_size, i), E123] = AsymetryFactor ...
-                        ( E1_xy, E2_xy, E3_xy, AF_index_size, jpeg_cell{i}{j}, AF_scale );
+                    [AF_store(j, AF_index_rad, AF_index_size, i), E123] = ...
+                        AsymetryFactor( E1_xy, E2_xy, E3_xy, AF_index_size, ...
+                        jpeg_cell{i}{j}, AF_scale );
                     [ A123, R123 ] = E123toPolar( E123 );
                     AR123_store{j, AF_index_rad, k, i} = [ A123, R123 ];
                     
@@ -198,8 +198,10 @@ elseif loop == 2
             class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
                 ceil((size_ulim - size_llim)/size_step), num_types);
             
-            class_store{AF_index_rad, k, 1} = AF_store(:, AF_index_rad, AF_index_size, 1) > AF_droplet;
-            class_store{AF_index_rad, k, 2} = AF_store(:, AF_index_rad, AF_index_size, 2) < AF_solid;
+            class_store{AF_index_rad, k, 1} = AF_store ...
+                (:, AF_index_rad, AF_index_size, 1) > AF_droplet;
+            class_store{AF_index_rad, k, 2} = AF_store ...
+                (:, AF_index_rad, AF_index_size, 2) < AF_solid;
             
             AF_index_size = AF_index_size + 1;
             
