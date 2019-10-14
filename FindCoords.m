@@ -145,8 +145,8 @@ elseif loop == 1
     class_store{1, 1} = AF_store(:, 1) > AF_droplet;
     class_store{1, 2} = AF_store(:, 2) < AF_solid;
     
-    percent_error_droplet = sum(class_store{1, 1})/rd*100
-    percent_error_solid = sum(class_store{1, 2})/rd*100
+    percent_error_droplet = sum(class_store{1, 1})/rd*100;
+    percent_error_solid = sum(class_store{1, 2})/rd*100;
 
 % 3) Classification error loop and plotting
 elseif loop == 2
