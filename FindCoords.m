@@ -165,9 +165,9 @@ elseif loop == 2
     
     % Pre-allocate storage variables for asymetry factor (AF) and centroid
     % angle radius for the 3 combined detectors (AR123)
-    AF_store = zeros(rd, ceil((rad_ulim - rad_llim)/rad_step), ...
+    AF_store = zeros(rd, floor((rad_ulim - rad_llim)/rad_step), ...
         ceil((size_ulim - size_llim)/size_step), num_types);
-    AR123_store = cell(rd, ceil((rad_ulim - rad_llim)/rad_step), ...
+    AR123_store = cell(rd, floor((rad_ulim - rad_llim)/rad_step), ...
         ceil((size_ulim - size_llim)/size_step), num_types);
 
     AF_index_rad = 1;       % Index for storage variables in loop
@@ -175,30 +175,30 @@ elseif loop == 2
     
     jpeg_cell = {jpeg_cell_droplet, jpeg_cell_solid};
     
-    for l=1:rad_step:rad_ulim-rad_llim
+    for l=rad_llim:rad_step:rad_ulim-rad_llim
         
         [ E1_xy, E2_xy, E3_xy ] = r2xy( l, offset_xy );
         
-        for k=1:size_step:size_ulim-size_llim 
+        for k=size_llim:size_step:size_ulim-size_llim 
             
             for i=1:num_types
                 
                 for j=1:rd
                     
-                    [AF_store(j, l, k, i), E123] = AsymetryFactor ...
-                        ( E1_xy, E2_xy, E3_xy, k, jpeg_cell{i}{j}, AF_scale );
+                    [AF_store(j, AF_index_rad, AF_index_size, i), E123] = AsymetryFactor ...
+                        ( E1_xy, E2_xy, E3_xy, AF_index_size, jpeg_cell{i}{j}, AF_scale );
                     [ A123, R123 ] = E123toPolar( E123 );
-                    AR123_store{j, l, k, i} = [ A123, R123 ];
+                    AR123_store{j, AF_index_rad, k, i} = [ A123, R123 ];
                     
                 end
                 
             end
             
-            class_store = cell(ceil((rad_ulim - rad_llim)/rad_step), ...
+            class_store = cell(floor((rad_ulim - rad_llim)/rad_step), ...
                 ceil((size_ulim - size_llim)/size_step), num_types);
             
-            class_store{l, k, 1} = AF_store(:, 1) > AF_droplet;
-            class_store{l, k, 2} = AF_store(:, 2) < AF_solid;
+            class_store{AF_index_rad, k, 1} = AF_store(:, AF_index_rad, AF_index_size, 1) > AF_droplet;
+            class_store{AF_index_rad, k, 2} = AF_store(:, AF_index_rad, AF_index_size, 2) < AF_solid;
             
             AF_index_size = AF_index_size + 1;
             
