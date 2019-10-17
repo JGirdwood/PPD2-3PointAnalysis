@@ -1,6 +1,8 @@
 function [ err_fig ] = PlotClassError( class_err_arr, rad_arr, size_arr )
-%PLOTCLASSERROR Summary of this function goes here
-%   Detailed explanation goes here
+%PLOTCLASSERROR Makes a surface plot of class error
+%   Y axis of the plot is radius, and the X axis is detector size. Specify
+%   the error array with class_err_arr along with two coordinates vectors
+%   for radius and size.
 
 fig = figure;
 ax = axes(fig);
