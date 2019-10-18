@@ -18,8 +18,8 @@ for i=1:c
     HA_interp = griddedInterpolant(LUT(:,end), LUT(:,1));
     rad_interp = griddedInterpolant(LUT(:,end), LUT(:,2));
 
-    half_angle(1, i) = HA_interp(rad_pix);
-    rad_mm(1, i) = rad_interp(rad_pix);
+    half_angle(1, i) = HA_interp(rad_pix(i));
+    rad_mm(1, i) = rad_interp(rad_pix(i));
 end
 
 end
