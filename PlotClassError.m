@@ -6,8 +6,12 @@ function [ err_fig ] = PlotClassError( class_err_arr, rad_arr, size_arr )
 
 fig = figure;
 ax = axes(fig);
-contourf(ax, size_arr, rad_arr, class_err_arr)
-contourcbar(ax)
+contourf(ax, size_arr, rad_arr, class_err_arr);
+contourcbar(ax);
+
+xlabel(ax, 'Detector Size (mm)');
+ylabel(ax, 'Detector Radius (mm)');
+title(ax, 'Misclassification Error (MCE) With Detector Size and Radius');
 
 err_fig = fig;
 
