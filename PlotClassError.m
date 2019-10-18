@@ -1,4 +1,4 @@
-function [ err_fig ] = PlotClassError( class_err_arr, rad_arr, size_arr )
+function [ err_fig ] = PlotClassError( class_err_arr, rad_arr, size_arr, type )
 %PLOTCLASSERROR Makes a surface plot of class error
 %   Y axis of the plot is radius, and the X axis is detector size. Specify
 %   the error array with class_err_arr along with two coordinates vectors
@@ -13,9 +13,10 @@ ax = axes(fig);
 contourf(ax, size_arr, rad_arr, class_err_arr);
 contourcbar(ax);
 
+fig_title = strcat(type, ' Misclassification Error (MCE) With Detector Size and Radius');
 xlabel(ax, 'Detector Size (mm)');
 ylabel(ax, 'Detector Radius (mm)');
-title(ax, 'Misclassification Error (MCE) With Detector Size and Radius');
+title(ax, fig_title);
 
 err_fig = fig;
 

@@ -232,9 +232,9 @@ elseif loop == 2
     [ ~, size_mm ] = Pix2AD( size_arr );
     
     if plot == true
-        %err_fig_d = PlotClassError(clerr_droplet, rad_arr, size_arr);
-        %err_fig_s = PlotClassError(clerr_solid, rad_arr, size_arr);
-        err_fig_m = PlotClassError(clerr_mean, rad_mm, size_mm);
+        err_fig_d = PlotClassError(clerr_droplet, rad_arr, size_arr, 'Droplet');
+        err_fig_s = PlotClassError(clerr_solid, rad_arr, size_arr, 'Solid');
+        err_fig_m = PlotClassError(clerr_mean, rad_mm, size_mm, 'Mean');
     end
     
 end
