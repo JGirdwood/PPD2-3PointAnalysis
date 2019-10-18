@@ -2,6 +2,10 @@ function [ half_angle, rad_mm ] = Pix2AD( rad_pix )
 %PIX2AD Converts pixels to angle and distance for the PPD2 camera.
 %   Converts radial distance in pixels to radial distance in mm and
 %   scattering angle.
+%
+% Author:           Joseph Girdwood
+% Affiliation:      University of Hertfordshire
+% email:            j.girdwood@herts.ac.uk
 
 [~, c] = size(rad_pix);
 half_angle = zeros(1, c);
