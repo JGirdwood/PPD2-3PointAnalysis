@@ -39,9 +39,9 @@ default_radius = 140;       % Radius for the image loop
 
 % Specify the file paths for various different aerosol types (droplet and
 % solid defined). 
-droplet_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Droplets';
+droplet_path = 'C:\Users\jg17acv\University of Hertfordshire\PPD-LC - Documents\PPD2\PPD2-sorted\Droplets';
 %droplet_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2\SID3-PPD2\NetworkTest\[150091716]';
-solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2-sorted\Unclassified-Solid';
+solid_path = 'C:\Users\jg17acv\University of Hertfordshire\PPD-LC - Documents\PPD2\PPD2-sorted\Unclassified-Solid';
 %solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2\SID3-PPD2\NetworkTest\[150091716]';
 
 % Set to true if plots are needed
@@ -228,13 +228,13 @@ elseif loop == 2
         
     end
     
-    [ ~, rad_mm ] = Pix2AD( rad_arr );
-    [ ~, size_mm ] = Pix2AD( size_arr );
+    [ rad_ang, rad_mm ] = Pix2AD( rad_arr );
+    [ size_ang, size_mm ] = Pix2AD( size_arr );
     
     if plot == true
-        err_fig_d = PlotClassError(clerr_droplet, rad_arr, size_arr, 'Droplet');
-        err_fig_s = PlotClassError(clerr_solid, rad_arr, size_arr, 'Solid');
-        err_fig_m = PlotClassError(clerr_mean, rad_mm, size_mm, 'Mean');
+        %err_fig_d = PlotClassError(clerr_droplet, rad_arr, size_arr, 'Droplet');
+        %err_fig_s = PlotClassError(clerr_solid, rad_arr, size_arr, 'Solid');
+        err_fig_m = PlotClassError(clerr_mean, rad_ang, size_ang, 'Mean');
     end
     
 end
