@@ -44,6 +44,10 @@ droplet_path = 'C:\Users\jg17acv\University of Hertfordshire\PPD-LC - Documents\
 solid_path = 'C:\Users\jg17acv\University of Hertfordshire\PPD-LC - Documents\PPD2\PPD2-sorted\Unclassified-Solid';
 %solid_path = 'C:\Users\jg17acv\Documents\DevelopmentEngineer\UH-PPD-LC\PPD2\SID3-PPD2\NetworkTest\[150091716]';
 
+% Chris Stopford's filessystem:
+droplet_path = 'F:\work_old\Data\SID3-PPD2\VOAG 10um\VOAG10\[063081221]';
+solid_path = 'F:\work_old\Data\SID3-PPD2\Standard Test Dust\[063000321]';
+
 % Set to true if plots are needed
 plot = true;
 
@@ -61,10 +65,22 @@ offset_xy = [round(dx/2), round(dy/2)];     % Get image centre pixels
 [rd, ~] = size(jpeg_cell_droplet);          % Get amount of droplets
 [rs, ~] = size(jpeg_cell_solid);            % Get amount of solids
 
-% Ensure number of images is equal for fair comparison
+% In order to make the size of datasets equal, trucate the larger of the
+% two
+if rs>rd
+    jpeg_cell_solid(rd+1:end,:)=[];
+elseif rs<rd
+    jpeg_cell_droplet(rs+1:end,:)=[];
+end
+
+[rd, ~] = size(jpeg_cell_droplet);          % Get amount of droplets
+[rs, ~] = size(jpeg_cell_solid);            % Get amount of solids
+
+% Verify number of images is equal for fair comparison
 if rd ~= rs
     loop = -1;
     error = true;
+    error('Number of particles not equal in solid & droplet datasets')
 end
 
 %%  Loops
@@ -240,7 +256,7 @@ elseif loop == 2
 end
 
 if error == true
-    "Errors were encountered";
+    disp("Errors were encountered");
 end
 
 

@@ -5,7 +5,8 @@ function [ AF, E123 ] = AsymetryFactor( E1_xy, E2_xy, E3_xy, pmt_size, image, sc
 %   query points. pmt_size is the size of these squares (one side of a 
 %   square or diameter of circle) in pixels. Image is an array of intensity 
 %   in the PPD2 scattering image. The equation for AF is given in Kaye et 
-%   al 1996. Shape is 0 if square and 1 if circle.
+%   al 1996 available at https://doi.org/10.1029/96JD00228
+%   Shape is 0 if square and 1 if circle.
 %
 % Author:           Joseph Girdwood
 % Affiliation:      University of Hertfordshire
